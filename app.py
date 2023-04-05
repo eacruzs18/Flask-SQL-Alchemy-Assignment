@@ -1,10 +1,15 @@
 from flask import Flask, abort, redirect, render_template, request
-
+from src.models import db
 from src.repositories.movie_repository import movie_repository_singleton
 
 app = Flask(__name__)
 
 # TODO: DB connection
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'mysql://root:@localhost:3306/movies'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
 
 @app.get('/')
 def index():
